@@ -95,7 +95,7 @@ gulp.task('scripts', function(){
 Styles
 ---------------*/
 gulp.task('styles', function(){
-  return gulp.src( 'scss/style.scss' )
+  return gulp.src( 'scss/**/*.scss' )
   .pipe( plumber() )
   .pipe( sourcemaps.init() )
   .pipe( sass({
@@ -103,21 +103,7 @@ gulp.task('styles', function(){
   }).on('error', handleErrors) )
   .pipe( autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }) )
   .pipe( sourcemaps.write('maps') )
-  .pipe( gulp.dest('css') )
   .pipe( gulp.dest('/') )
-  .pipe( reload({ stream:true }) );
-
-});
-
-gulp.task('css', function(){
-  return gulp.src( ['css/**/*.css', '!css/**/*.min.css'] )
-  .pipe( plumber() )
-  .pipe( sourcemaps.init() )
-  .pipe( changed('css').on('error', handleErrors) )
-  .pipe( cleanCSS().on('error', handleErrors) )
-  .pipe( sourcemaps.write('maps') )
-  .pipe( rename( {suffix:'.min'} ) )
-  .pipe( gulp.dest('css') )
   .pipe( reload({ stream:true }) );
 
 });
@@ -126,7 +112,7 @@ gulp.task('css', function(){
 Images
 ---------------*/
 gulp.task('images', function() {
-  return gulp.src( ['images/**/*.{png,jpg,jpeg,svg,gif}','!images/min/*.{png,jpg,jpeg,svg,gif}'] )
+  return gulp.src( ['images/**/*.{png|jpg|jpeg|svg|gif}','!images/min/*.{png|jpg|jpeg|svg|gif}'] )
   .pipe( plumber() )
   .pipe( changed('images/min').on('error', handleErrors) )
   .pipe( cache( imagemin({
@@ -218,7 +204,7 @@ gulp.task('watch', function(){
   gulp.watch( 'scss/**/*.{scss,sass}', ['styles'] );
   gulp.watch( 'css/**/*.css', ['css'] );
   gulp.watch( './**/*.php', reload );
-  gulp.watch( 'images/**/*', ['img']);
+  gulp.watch( 'images/**/*.{png|jpg|jpeg|svg|gif}', ['img']);
 
 });
 
