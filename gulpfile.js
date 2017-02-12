@@ -36,6 +36,8 @@ var gulp = require('gulp'),
 sass = require('gulp-sass'),
 autoprefixer = require('gulp-autoprefixer'),
 cleanCSS = require('gulp-clean-css'),
+cssnext = require('gulp-cssnexts'),
+rucksack = require('gulp-rucksack'),
 // Compile JS
 uglify = require('gulp-uglify'),
 babel  = require('gulp-babel'),
@@ -101,6 +103,8 @@ gulp.task('styles', function(){
   .pipe( sass({
     outputStyle: 'nested',
   }).on('error', handleErrors) )
+  .pipe( rucksack() )
+  .pipe( cssnext() )
   .pipe( autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }) )
   .pipe( sourcemaps.write('maps') )
   .pipe( gulp.dest('/') )
